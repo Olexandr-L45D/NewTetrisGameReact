@@ -1,53 +1,63 @@
 .boardContainer {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-items: center; /* щоб сітка завжди була по центру */
 }
+
+/* контейнер для доступних фігур */
 .shapePicker {
   margin-bottom: 140px;
-  width: 300px;
+  width: 100%;
+  max-width: 320px;
   min-height: 100px;
+
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
-  gap: 10px;
-  padding: 5px;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  padding: 8px;
+  box-sizing: border-box;
 }
 
+/* сама фігура */
 .shape {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
+
+  touch-action: none; /* щоб працювали жести drag без скролу */
+  cursor: grab;
+  user-select: none;
 }
 
+/* рядок у фігурі */
 .shapeRow {
   display: flex;
-  gap: 2px;
+  gap: 3px;
 }
 
+/* клітинка фігури */
 .shapeCell {
-  width: 25px;
-  height: 25px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background-color: transparent;
+  transition: background-color 0.2s ease;
 }
 
+/* тіньовий превʼю під час drag */
 .dragPreview {
   position: fixed;
-  pointer-events: none;
-  opacity: 0.8;
+  top: 0;
+  left: 0;
   transform: translate(-50%, -50%);
+  pointer-events: none;
   z-index: 9999;
-}
 
-/* щоб жести працювали, а сторінка не скролилась під пальцем */
-.shape {
-  touch-action: none;
-}
-
-/* привид має не ловити події */
-.dragPreview {
-  position: fixed;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 999;
+  opacity: 0.9;
 }
