@@ -1,0 +1,32 @@
+/* SettingPage  it is have three background layers */
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 780px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  box-sizing: border-box;
+}
+.container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/src/assets/emages/MaskStars.png") calc(50% - 20px)
+    center/cover no-repeat;
+  mix-blend-mode: screen;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+.gameWrapper {
+  transition: transform 0.8s ease-in;
+  will-change: transform;
+}
+
+.slideDown {
+  transform: translateY(100%);
+}

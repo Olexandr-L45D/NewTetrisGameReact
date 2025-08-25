@@ -1,0 +1,53 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 780px;
+  background: url("/src/assets/emages/BacgrBlue.png") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* максимально високий, щоб точно було зверху */
+  padding: 16px;
+  box-sizing: border-box;
+}
+.modalOverlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/src/assets/emages/MaskStars.png") center/cover no-repeat;
+  mix-blend-mode: screen;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+.title {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 10 auto 20px auto;
+  font-family: Fredoka;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 1.4;
+  justify-content: start;
+  color: #ffffff;
+}
+.text {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 5 auto 10px auto;
+  font-family: Fredoka;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.2;
+  justify-content: start;
+  color: #ffffff;
+}
+.textBtn {
+  margin-top: 5px;
+  margin: 10px;
+  padding: 10px;
+}

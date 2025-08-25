@@ -1,0 +1,184 @@
+/* GameSettingsModal.module.css */
+.modalSection {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 780px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 9999; /* максимально високий, щоб точно було зверху */
+  padding: 20px;
+  margin: 10px;
+  box-sizing: border-box;
+}
+.blokTitle {
+  margin-top: 10px;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  margin-left: 10px;
+}
+.Alltitle {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 2 auto 2px auto;
+  /* margin-left: 5px; */
+  font-family: Fredoka;
+  font-weight: 1000;
+  font-size: 25px;
+  line-height: 2;
+  justify-content: start;
+  color: #ffffff;
+}
+.title {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 8px auto;
+  margin-left: 0px;
+  margin-right: 5px;
+  padding-right: 5px;
+  font-family: Fredoka;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1;
+  justify-content: start;
+  color: #ffffff;
+}
+.titleSet {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 2 auto 10px auto;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1;
+  text-align: center;
+  justify-content: start;
+  color: black;
+}
+.text {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 8px auto;
+  margin-left: 30px;
+  font-family: Fredoka;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1;
+  justify-content: start;
+  color: #ffffff;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 780px;
+  background: url("/src/assets/emages/BacgrBlue.png") center/cover no-repeat;
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  z-index: 9999; /* максимально високий, щоб точно було зверху */
+  padding: 16px;
+  box-sizing: border-box;
+  /* align-items: center; */
+}
+.modalOverlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/src/assets/emages/MaskStars.png") center/cover no-repeat;
+  mix-blend-mode: screen;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.modalContent {
+  position: fixed;
+  top: 250px;
+  background: white;
+  padding: 25px;
+  padding-top: 0px;
+  border-radius: 15px;
+  max-width: 280px;
+  height: 350px;
+  /* max-height: 80vh; */
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: url("/src/assets/emages/FonImageSelebr.png");
+}
+
+.modalContent label {
+  display: block;
+  margin-top: 8px;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1;
+  justify-content: start;
+  color: black;
+  padding: 3px;
+}
+
+.modalContent input,
+.modalContent select {
+  width: 100%;
+  padding: 4px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.buttons button {
+  padding: 8px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #6b73df;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttons button:hover {
+  background-color: #6b73df;
+}
+
+.buttonEnd {
+  padding: 8px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #ffd28f;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.buttonEnd:hover {
+  background-color: #ffc267;
+}
+.titleSet {
+  margin-top: 20px;
+  font-weight: 1000;
+  font-size: 20px;
+  /* line-height: 1; */
+  /* justify-content: start; */
+  color: black;
+  padding: 3px;
+}
