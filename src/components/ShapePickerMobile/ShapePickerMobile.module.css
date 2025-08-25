@@ -6,7 +6,7 @@
 }
 
 /* контейнер для доступних фігур */
-.shapePicker {
+/* .shapePicker {
   margin-bottom: 140px;
   width: 100%;
   max-width: 320px;
@@ -20,6 +20,16 @@
 
   padding: 8px;
   box-sizing: border-box;
+} */
+.shapePicker {
+  margin-bottom: 120px;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px;
 }
 
 /* сама фігура */
@@ -40,14 +50,21 @@
 }
 
 /* клітинка фігури */
-.shapeCell {
+/* .shapeCell {
   width: 30px;
   height: 30px;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-
   background-color: transparent;
   transition: background-color 0.2s ease;
+} */
+
+.shapeCell {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background: hsl(107, 95%, 15%); /* основний колір клітинки */
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4); /* внутрішня тінь */
 }
 
 /* тіньовий превʼю під час drag */
