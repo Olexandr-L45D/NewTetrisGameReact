@@ -1,28 +1,11 @@
-// import { useEffect, useState } from "react";
-// import css from "./TetrisGame.module.css";
-// import { FcBusinessman } from "react-icons/fc";
-// import { FiSettings } from "react-icons/fi";
-// import { generateShapes, checkFullLines, clearLines } from "../GameLogic";
-// import GameBoard from "../GameBoard/GameBoard";
-// import ShapePicker from "../ShapePicker/ShapePicker";
 import { useEffect, useState } from "react";
 import css from "./TetrisGame.module.css";
 import { FcBusinessman } from "react-icons/fc";
 import { FiSettings } from "react-icons/fi";
-
-// старі функції
-// import { generateShapes, checkFullLines, clearLines } from "../GameLogic";
-import { checkFullLines, clearLines, getCellFromCoords } from "../GameLogic";
-
-// новий генератор
-// import ShapePickerMobileDrag, {generateMobileShapes,} from "../ShapePicker/ShapePickerMobileDrag";
-
+import { generateShapes, checkFullLines, clearLines } from "../GameLogic";
 import GameBoard from "../GameBoard/GameBoard";
-import ShapePickerMobileDrag, {
-  generateMobileShapes,
-} from "../ShapePickerMobileDrag/ShapePickerMobileDrag";
-// старий ShapePicker (залишаємо, раптом треба буде порівняти)
 // import ShapePicker from "../ShapePicker/ShapePicker";
+import ShapePickerMobile from "../ShapePickerMobile/ShapePickerMobile";
 
 const GRID_SIZE = 8;
 
@@ -32,9 +15,7 @@ const TetrisGame = () => {
   );
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
-
-  // тут використовуємо НОВИЙ генератор
-  const [shapes, setShapes] = useState(generateMobileShapes(3));
+  const [shapes, setShapes] = useState(generateShapes(3));
 
   // ініціалізація (витягнути рекорд з localStorage)
   useEffect(() => {
@@ -47,20 +28,15 @@ const TetrisGame = () => {
     localStorage.setItem("totalScore", totalScore);
   }, [totalScore]);
 
-  const handleDropShape = (shapeObj, row, col) => {
-    const { cells, color } = shapeObj;
+  const handleDropShape = (shape, row, col) => {
     const newGrid = grid.map(r => [...r]);
     let canPlace = true;
 
     // перевіряємо чи можна поставити
-    for (let r = 0; r < cells.length; r++) {
-      for (let c = 0; c < cells[r].length; c++) {
-        if (cells[r][c]) {
-          if (
-            !newGrid[row + r] ||
-            newGrid[row + r][col + c] !== null ||
-            col + c >= GRID_SIZE
-          ) {
+    for (let r = 0; r < shape.length; r++) {
+      for (let c = 0; c < shape[r].length; c++) {
+        if (shape[r][c]) {
+          if (!newGrid[row + r] || newGrid[row + r][col + c] !== null) {
             canPlace = false;
           }
         }
@@ -70,10 +46,10 @@ const TetrisGame = () => {
     if (!canPlace) return;
 
     // ставимо фігуру
-    for (let r = 0; r < cells.length; r++) {
-      for (let c = 0; c < cells[r].length; c++) {
-        if (cells[r][c]) {
-          newGrid[row + r][col + c] = color;
+    for (let r = 0; r < shape.length; r++) {
+      for (let c = 0; c < shape[r].length; c++) {
+        if (shape[r][c]) {
+          newGrid[row + r][col + c] = shape[r][c]; // колір
         }
       }
     }
@@ -92,7 +68,7 @@ const TetrisGame = () => {
     }
 
     // нові фігури
-    setShapes(generateMobileShapes(3));
+    setShapes(generateShapes(3));
   };
 
   return (
@@ -121,21 +97,190 @@ const TetrisGame = () => {
         {/* Main Board */}
         <GameBoard grid={grid} onDropShape={handleDropShape} />
 
-        {/* Shape Picker — використовуємо новий MobileDrag */}
-        {/* <ShapePickerMobileDrag shapes={shapes} onDrop={handleDropShape} /> */}
-
-        <ShapePickerMobileDrag
-          shapes={shapes}
-          onDrop={(shape, x, y) => {
-            const { row, col } = getCellFromCoords(x, y);
-            handleDropShape(shape.cells, row, col);
-          }}
-        />
-        {/* якщо треба лишити старий, можна ось так */}
-        {/* <ShapePicker shapes={generateShapes(3)} /> */}
+        {/* Shape Picker */}
+        {/* <ShapePicker shapes={shapes} /> */}
+        <ShapePickerMobile shapes={shapes} onDropShape={handleDropShape} />
       </div>
     </main>
   );
 };
 
 export default TetrisGame;
+
+// import { useEffect, useState } from "react";
+// import css from "./TetrisGame.module.css";
+// import { FcBusinessman } from "react-icons/fc";
+// import { FiSettings } from "react-icons/fi"; // шестерня
+
+// const GRID_SIZE = 8;
+// const COLORS = [
+//   "#00fc54af", // салатово-зелений
+//   "#0000FF", // синій
+//   "#00BFFF", // голубий
+//   "#FFFF00", // жовтий
+//   "#800080", // фіолетовий
+//   "#ffa60090", // оранжевий
+//   "#FF6347", // червоний (рідкісний бонусний)
+// ];
+
+// const getRandomColor = () => {
+//   const rareChance = Math.random();
+//   if (rareChance < 0.05) return COLORS[6]; // 5% червоного
+//   return COLORS[Math.floor(Math.random() * 6)];
+// };
+
+// const TetrisGame = () => {
+//   const [grid, setGrid] = useState([]);
+//   const [score, setScore] = useState(0);
+
+//   // ініціалізація
+//   useEffect(() => {
+//     const savedScore = localStorage.getItem("gameScore");
+//     if (savedScore) setScore(Number(savedScore));
+
+//     const newGrid = Array.from({ length: GRID_SIZE }, () =>
+//       Array.from({ length: GRID_SIZE }, () => getRandomColor())
+//     );
+//     setGrid(newGrid);
+//   }, []);
+
+//   // збереження скору
+//   useEffect(() => {
+//     localStorage.setItem("gameScore", score);
+//   }, [score]);
+
+//   return (
+//     <section className={css.gameWrapper}>
+//       <main className={css.containerGame}>
+//         <div className={css.container}>
+//           {/* Header */}
+//           <header className={css.header}>
+//             <FcBusinessman className={css.logoGame} />
+
+//             <div className={css.scoreBox}>
+//               <div className={css.scoreBackground}>
+//                 <span className={css.scoreLabel}>Score</span>
+//                 <span className={css.scoreValue}>{score}</span>
+//               </div>
+//             </div>
+
+//             <FiSettings className={css.settingsIcon} />
+//           </header>
+
+//           {/* Main Board */}
+//           <section className={css.boardContainer}>
+//             <section className={css.boardWrapper}>
+//               <div className={css.board}>
+//                 {grid.map((row, rowIndex) =>
+//                   row.map((color, colIndex) => (
+//                     <div
+//                       key={`${rowIndex}-${colIndex}`}
+//                       className={css.cell}
+//                       style={{ backgroundColor: color }}
+//                     />
+//                   ))
+//                 )}
+//               </div>
+//             </section>
+//           </section>
+
+//           {/* Footer */}
+//           <footer className={css.footer}>
+//             <button className={css.button} onClick={() => setScore(0)}>
+//               Reset Score
+//             </button>
+//           </footer>
+//         </div>
+//       </main>
+//     </section>
+//   );
+// };
+
+// export default TetrisGame;
+
+// import { useEffect, useState } from "react";
+// import css from "./TetrisGame.module.css";
+// import { FcBusinessman } from "react-icons/fc";
+// const GRID_SIZE = 8;
+// const COLORS = [
+//   "#00fc54af", // салатово-зелений
+//   "#0000FF", // синій
+//   "#00BFFF", // голубий
+//   "#FFFF00", // жовтий
+//   "#800080", // фіолетовий
+//   "#ffa60090", // оранжевий
+//   "#FF6347", // червоний (рідкісний бонусний)
+// ];
+
+// const getRandomColor = () => {
+//   const rareChance = Math.random();
+//   // Робимо червоний рідкісним
+//   if (rareChance < 0.05) return COLORS[6];
+//   return COLORS[Math.floor(Math.random() * 6)];
+// };
+
+// const TetrisGame = () => {
+//   const [grid, setGrid] = useState([]);
+//   const [score, setScore] = useState(0);
+
+//   // ініціалізація
+//   useEffect(() => {
+//     const savedScore = localStorage.getItem("gameScore");
+//     if (savedScore) setScore(Number(savedScore));
+
+//     const newGrid = Array.from({ length: GRID_SIZE }, () =>
+//       Array.from({ length: GRID_SIZE }, () => getRandomColor())
+//     );
+//     setGrid(newGrid);
+//   }, []);
+
+//   // збереження скору
+//   useEffect(() => {
+//     localStorage.setItem("gameScore", score);
+//   }, [score]);
+
+//   return (
+//     <section className={css.gameWrapper}>
+//       <main className={css.containerGame}>
+//         <div className={css.container}>
+//           {/* Header */}
+//           <FcBusinessman className={css.logoGame} />
+//           <header className={css.header}>
+//             <h1 className={css.title}>Color Blocks</h1>
+//             <div className={css.scoreBox}>
+//               <span className={css.scoreLabel}>Score:</span>
+//               <span className={css.scoreValue}>{score}</span>
+//             </div>
+//           </header>
+
+//           {/* Main Board */}
+//           <section className={css.boardContainer}>
+//             <section className={css.boardWrapper}>
+//               <div className={css.board}>
+//                 {grid.map((row, rowIndex) =>
+//                   row.map((color, colIndex) => (
+//                     <div
+//                       key={`${rowIndex}-${colIndex}`}
+//                       className={css.cell}
+//                       style={{ backgroundColor: color }}
+//                     />
+//                   ))
+//                 )}
+//               </div>
+//             </section>
+//           </section>
+//           {/* Footer */}
+//           <footer className={css.footer}>
+//             <button className={css.button} onClick={() => setScore(0)}>
+//               Reset Score
+//             </button>
+//           </footer>
+//         </div>
+//       </main>
+//     </section>
+//   );
+// };
+
+// export default TetrisGame;
+
+//  <section className={`${css.gameWrapper} ${slideDown ? css.slideDown : ""}`}></section>
